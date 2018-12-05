@@ -1,10 +1,11 @@
-// ²âÊÔÓÃµÄURL
+// æµ‹è¯•ç”¨çš„URL
+// éšä¾¿åŠ ç‚¹ä¸œè¥¿ ç»ƒä¹ æœ¬åœ°ä»£ç æ›´æ–°åŠŸèƒ½
 $urls = array(
 "http://www.doucube.com",
 "http://www.mozilla.com",
 "http://www.facebook.com"
 );
-// ²âÊÔÓÃµÄä¯ÀÀÆ÷ĞÅÏ¢
+// æµ‹è¯•ç”¨çš„æµè§ˆå™¨ä¿¡æ¯
 $browsers = array(
     "standard" => array (
         "user_agent" => "Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.6) Gecko/20091201 Firefox/3.5.6 (.NET CLR 3.5.30729)",
@@ -23,22 +24,22 @@ foreach ($urls as $url) {
     echo "URL: $url\n";
     foreach ($browsers as $test_name => $browser) {
         $ch = curl_init();
-        // ÉèÖÃ url
+        // è®¾ç½® url
         curl_setopt($ch, CURLOPT_URL, $url);
-        // ÉèÖÃä¯ÀÀÆ÷µÄÌØ¶¨header
+        // è®¾ç½®æµè§ˆå™¨çš„ç‰¹å®šheader
         curl_setopt($ch, CURLOPT_HTTPHEADER, array(
         "User-Agent: {$browser['user_agent']}",
         "Accept-Language: {$browser['language']}"
         ));
-        // Ò³ÃæÄÚÈİÎÒÃÇ²¢²»ĞèÒª
+        // é¡µé¢å†…å®¹æˆ‘ä»¬å¹¶ä¸éœ€è¦
         curl_setopt($ch, CURLOPT_NOBODY, 1);
-        // Ö»Ğè·µ»ØHTTP header
+        // åªéœ€è¿”å›HTTP header
         curl_setopt($ch, CURLOPT_HEADER, 1);
-        // ·µ»Ø½á¹û£¬¶ø²»ÊÇÊä³öËü
+        // è¿”å›ç»“æœï¼Œè€Œä¸æ˜¯è¾“å‡ºå®ƒ
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         $output = curl_exec($ch);
         curl_close($ch);
-        // ÓĞÖØ¶¨ÏòµÄHTTPÍ·ĞÅÏ¢Âğ?
+        // æœ‰é‡å®šå‘çš„HTTPå¤´ä¿¡æ¯å—?
         if (preg_match("!Location: (.*)!", $output, $matches)) {
             echo "$test_name: redirects to $matches[1]\n";
         } else {
